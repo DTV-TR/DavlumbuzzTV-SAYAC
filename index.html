@@ -3,107 +3,84 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Davlumbuzz TV - Canlı Takip Paneli</title>
+    <title>DavlumbuzzTV - Canlı Yayın Platformu</title>
     <!-- Tailwind CSS ve FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta+Sans', sans-serif; background-color: #050507; color: #f8fafc; }
-        /* İframe'in dış taşmalarını kusursuz kırpan özel maske */
-        .counter-container {
-            position: relative;
-            width: 100%;
-            height: 90px;
-            overflow: hidden;
-            border-radius: 1rem;
-        }
-        .counter-container iframe {
-            position: absolute;
-            top: -20px;
-            left: 0;
-            width: 100%;
-            height: 140px;
-            border: 0;
-            pointer-events: none;
-        }
     </style>
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-red-500 selection:text-white">
 
-    <!-- Üst Başlık -->
-    <header class="w-full max-w-3xl mx-auto px-4 pt-10 pb-6 text-center">
-        <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
-            <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> Canlı YouTube Monitörü
+    <!-- Üst Banner / Header -->
+    <header class="w-full max-w-4xl mx-auto px-4 pt-12 pb-8 text-center">
+        <!-- Canlı Aktif Durum Göstergesi -->
+        <div class="inline-flex items-center gap-2.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 shadow-lg shadow-emerald-500/5">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span> Yayıncı Aktif / Çevrimiçi
         </div>
-        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Davlumbuzz TV</h1>
-        <p class="text-slate-400 text-xs md:text-sm mt-1">Anlık abone ve kanal istatistik takip paneli</p>
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-2">DavlumbuzzTV</h1>
+        <p class="text-slate-400 text-sm md:text-base">Canlı yayınlar ve sosyal medya hesaplarının toplandığı resmi merkez</p>
     </header>
 
-    <!-- Ana Kartlar -->
-    <main class="w-full max-w-3xl mx-auto px-4 grid grid-cols-1 gap-6 mb-12">
+    <!-- Ana İçerik ve Bölümler -->
+    <main class="w-full max-w-4xl mx-auto px-4 grid grid-cols-1 gap-8 mb-16">
         
-        <!-- Canlı Abone Sayacı Kartı -->
-        <div class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800/80 rounded-3xl p-6 shadow-2xl">
-            <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 text-lg">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-white text-sm font-bold">Anlık Abone Sayacı</h3>
-                        <p class="text-slate-400 text-xs">Saniyeler içinde gerçek zamanlı güncellenir</p>
-                    </div>
-                </div>
-                <span class="bg-red-500/10 text-red-400 text-xs font-bold px-3 py-1 rounded-full border border-red-500/20 animate-pulse">CANLI</span>
-            </div>
-            
-            <!-- Kusursuz Kırpılmış Canlı Abone Sayaç Alanı -->
-            <div class="counter-container bg-slate-950 border border-slate-800 flex items-center justify-center shadow-inner">
-                <iframe src="https://livecounts.io/embed/youtube-live-subscriber-count/UCpLu4UnuANFstfgPuCZ6_uA" scrolling="no"></iframe>
-            </div>
-        </div>
-
-        <!-- Canlı Görüntülenme / İzlenme Sayacı Kartı -->
-        <div class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800/80 rounded-3xl p-6 shadow-2xl">
-            <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 text-lg">
-                        <i class="fa-solid fa-eye"></i>
-                    </div>
-                    <div>
-                        <h3 class="text-white text-sm font-bold">Anlık İzlenme & Kanal Sayaç</h3>
-                        <p class="text-slate-400 text-xs">Toplam görüntülenme ve detaylı istatistik</p>
-                    </div>
-                </div>
-                <span class="bg-blue-500/10 text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-500/20">CANLI</span>
-            </div>
-            
-            <!-- Kusursuz Kırpılmış İzlenme Sayaç Alanı -->
-            <div class="counter-container bg-slate-950 border border-slate-800 flex items-center justify-center shadow-inner">
-                <iframe src="https://livecounts.io/embed/youtube-estimated-video-views/UCpLu4UnuANFstfgPuCZ6_uA" scrolling="no"></iframe>
-            </div>
-        </div>
-
-        <!-- Social Blade / Detay Butonu -->
-        <a href="https://socialblade.com/youtube/channel/UCpLu4UnuANFstfgPuCZ6_uA" target="_blank" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 rounded-2xl p-4 flex items-center justify-between transition-all group">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
-                    <i class="fa-solid fa-chart-line"></i>
+        <!-- BÖLÜM 1: Canlı Yayın & Sosyal Hesaplar -->
+        <section class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800/80 rounded-3xl p-6 shadow-2xl">
+            <div class="flex items-center gap-3 mb-6 border-b border-slate-800/60 pb-4">
+                <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 text-lg">
+                    <i class="fa-solid fa-tower-broadcast"></i>
                 </div>
                 <div>
-                    <h4 class="text-xs text-slate-400 font-semibold uppercase">Gelişmiş Analiz</h4>
-                    <p class="text-sm font-bold text-white">Social Blade Raporunu Görüntüle</p>
+                    <h2 class="text-white text-lg font-bold">Yayın ve Medya Kanalları</h2>
+                    <p class="text-slate-400 text-xs">Aktif olduğum platformlar</p>
                 </div>
             </div>
-            <i class="fa-solid fa-chevron-right text-xs text-slate-400 pr-2"></i>
-        </a>
+
+            <!-- Link Kartları -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                
+                <!-- Kick Linki -->
+                <a href="https://kick.com/davlumbuzztv" target="_blank" class="bg-slate-950/60 hover:bg-slate-950 border border-slate-800/80 hover:border-emerald-500/50 rounded-2xl p-4 flex items-center justify-between transition-all group">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-11 h-11 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-solid fa-video"></i>
+                        </div>
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h3 class="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">Kick Canlı Yayın</h3>
+                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Yayında"></span>
+                            </div>
+                            <p class="text-xs text-slate-400">kick.com/davlumbuzztv</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-white transition-colors pr-1"></i>
+                </a>
+
+                <!-- TikTok Linki -->
+                <a href="https://vt.tiktok.com/ZS9Df2QtMTUsU-wTDdc/" target="_blank" class="bg-slate-950/60 hover:bg-slate-950 border border-slate-800/80 hover:border-pink-500/50 rounded-2xl p-4 flex items-center justify-between transition-all group">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-11 h-11 rounded-xl bg-pink-500/10 flex items-center justify-center text-pink-400 text-xl group-hover:scale-110 transition-transform">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-bold text-white group-hover:text-pink-400 transition-colors">TikTok</h3>
+                            <p class="text-xs text-slate-400">Kısa videolar ve kesitler</p>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-white transition-colors pr-1"></i>
+                </a>
+
+            </div>
+        </section>
 
     </main>
 
-    <!-- Alt Bilgi -->
+    <!-- Footer -->
     <footer class="w-full text-center py-6 text-xs text-slate-600 border-t border-slate-900">
-        Muammer tarafından tasarlanmıştır &bull; GitHub Pages
+        DavlumbuzzTV Yayın Merkezi &bull; GitHub Pages
     </footer>
 
 </body>
