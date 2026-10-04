@@ -3,62 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DavlumbuzzTV - Canlı Yayın Platformu</title>
+    <title>DavlumbuzzTV - Canlı Yayın Merkezi</title>
     <!-- Tailwind CSS ve FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta+Sans', sans-serif; background-color: #050507; color: #f8fafc; }
+        
+        /* Video Oynatıcıyı Kusursuz Tutan Çerçeve */
+        .video-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Oranı */
+            height: 0;
+            overflow: hidden;
+            border-radius: 1.25rem;
+            background-color: #000;
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-red-500 selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-white">
 
     <!-- Üst Banner / Header -->
-    <header class="w-full max-w-4xl mx-auto px-4 pt-12 pb-8 text-center">
-        <!-- Canlı Aktif Durum Göstergesi -->
-        <div class="inline-flex items-center gap-2.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-4 shadow-lg shadow-emerald-500/5">
-            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span> Yayıncı Aktif / Çevrimiçi
+    <header class="w-full max-w-4xl mx-auto px-4 pt-10 pb-6 text-center">
+        <div class="inline-flex items-center gap-2.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3 shadow-lg shadow-emerald-500/5">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span> Canlı Yayın Odası
         </div>
-        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-2">DavlumbuzzTV</h1>
-        <p class="text-slate-400 text-sm md:text-base">Canlı yayınlar ve sosyal medya hesaplarının toplandığı resmi merkez</p>
+        <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-1">DavlumbuzzTV</h1>
+        <p class="text-slate-400 text-xs md:text-sm">Canlı yayın oynatıcısı ve resmi sosyal medya kanalları</p>
     </header>
 
-    <!-- Ana İçerik ve Bölümler -->
+    <!-- Ana İçerik -->
     <main class="w-full max-w-4xl mx-auto px-4 grid grid-cols-1 gap-8 mb-16">
         
-        <!-- BÖLÜM 1: Canlı Yayın & Sosyal Hesaplar -->
-        <section class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800/80 rounded-3xl p-6 shadow-2xl">
-            <div class="flex items-center gap-3 mb-6 border-b border-slate-800/60 pb-4">
-                <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 text-lg">
-                    <i class="fa-solid fa-tower-broadcast"></i>
+        <!-- KICK CANLI YAYIN VİDEO OYNATICISI -->
+        <section class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800/80 rounded-3xl p-5 md:p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/60">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-lg">
+                        <i class="fa-solid fa-tower-broadcast"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-white text-sm md:text-base font-bold">Kick Canlı Yayın Ekranı</h2>
+                        <p class="text-slate-400 text-xs">Yayındayken doğrudan buradan izlenebilir</p>
+                    </div>
+                </div>
+                <span class="bg-emerald-500/10 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/20 animate-pulse">CANLI PLAYER</span>
+            </div>
+
+            <!-- Kick Video Embed (Oynatıcı) -->
+            <div class="video-container border border-slate-800 shadow-inner">
+                <iframe src="https://player.kick.com/davlumbuzztv" allowfullscreen="true" scrolling="no"></iframe>
+            </div>
+            
+            <div class="mt-4 flex items-center justify-between text-xs text-slate-400">
+                <span>Yayıncının kanalına doğrudan gitmek için:</span>
+                <a href="https://kick.com/davlumbuzztv" target="_blank" class="text-emerald-400 font-bold hover:underline flex items-center gap-1">
+                    kick.com/davlumbuzztv <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- DİĞER PLATFORMLAR VE SOSYAL MEDYA -->
+        <section class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800/80 rounded-3xl p-5 md:p-6 shadow-2xl">
+            <div class="flex items-center gap-3 mb-5 pb-3 border-b border-slate-800/60">
+                <div class="w-10 h-10 rounded-xl bg-pink-500/10 flex items-center justify-center text-pink-400 text-lg">
+                    <i class="fa-solid fa-share-nodes"></i>
                 </div>
                 <div>
-                    <h2 class="text-white text-lg font-bold">Yayın ve Medya Kanalları</h2>
-                    <p class="text-slate-400 text-xs">Aktif olduğum platformlar</p>
+                    <h2 class="text-white text-sm md:text-base font-bold">Diğer Bağlantılar</h2>
+                    <p class="text-slate-400 text-xs">Sosyal medya ve içerikler</p>
                 </div>
             </div>
 
-            <!-- Link Kartları -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                
-                <!-- Kick Linki -->
-                <a href="https://kick.com/davlumbuzztv" target="_blank" class="bg-slate-950/60 hover:bg-slate-950 border border-slate-800/80 hover:border-emerald-500/50 rounded-2xl p-4 flex items-center justify-between transition-all group">
-                    <div class="flex items-center gap-3.5">
-                        <div class="w-11 h-11 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 text-xl group-hover:scale-110 transition-transform">
-                            <i class="fa-solid fa-video"></i>
-                        </div>
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <h3 class="text-sm font-bold text-white group-hover:text-emerald-400 transition-colors">Kick Canlı Yayın</h3>
-                                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="Yayında"></span>
-                            </div>
-                            <p class="text-xs text-slate-400">kick.com/davlumbuzztv</p>
-                        </div>
-                    </div>
-                    <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-white transition-colors pr-1"></i>
-                </a>
-
+            <div class="grid grid-cols-1 md:grid-cols-1 gap-4">
                 <!-- TikTok Linki -->
                 <a href="https://vt.tiktok.com/ZS9Df2QtMTUsU-wTDdc/" target="_blank" class="bg-slate-950/60 hover:bg-slate-950 border border-slate-800/80 hover:border-pink-500/50 rounded-2xl p-4 flex items-center justify-between transition-all group">
                     <div class="flex items-center gap-3.5">
@@ -66,13 +93,12 @@
                             <i class="fa-brands fa-tiktok"></i>
                         </div>
                         <div>
-                            <h3 class="text-sm font-bold text-white group-hover:text-pink-400 transition-colors">TikTok</h3>
+                            <h3 class="text-sm font-bold text-white group-hover:text-pink-400 transition-colors">TikTok Kanalı</h3>
                             <p class="text-xs text-slate-400">Kısa videolar ve kesitler</p>
                         </div>
                     </div>
                     <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-500 group-hover:text-white transition-colors pr-1"></i>
                 </a>
-
             </div>
         </section>
 
