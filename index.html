@@ -39,13 +39,34 @@
             <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span> Canlı Yayın Odası
         </div>
         <h1 class="text-3xl md:text-5xl font-extrabold tracking-tight text-white mb-1">DavlumbuzzTV</h1>
-        <p class="text-slate-400 text-xs md:text-sm">Canlı yayın oynatıcısı ve sosyal medya platformları</p>
+        <p class="text-slate-400 text-xs md:text-sm">En son videolar, canlı yayınlar ve sosyal medya platformları</p>
     </header>
 
     <!-- Ana İçerik -->
     <main class="w-full max-w-4xl mx-auto px-4 grid grid-cols-1 gap-8 mb-16">
         
-        <!-- KICK CANLI VİDEO OYNATICISI (Doğrudan Sitede Oynar) -->
+        <!-- 1. YOUTUBE EN SON VİDEO (EN ÜSTE TAŞINDI) -->
+        <section class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800/80 rounded-3xl p-5 md:p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/60">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 text-lg">
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-white text-sm md:text-base font-bold">YouTube En Son Video</h2>
+                        <p class="text-slate-400 text-xs">Kanalına yeni video attığında buraya otomatik düşer</p>
+                    </div>
+                </div>
+                <span class="bg-red-500/10 text-red-400 text-xs font-bold px-3 py-1 rounded-full border border-red-500/20">EN YENİ</span>
+            </div>
+
+            <!-- Videonun Yükleneceği Alan -->
+            <div id="latestVideoContainer" class="text-center py-8 text-slate-400 text-sm">
+                En son video yükleniyor...
+            </div>
+        </section>
+
+        <!-- 2. KICK CANLI VİDEO OYNATICISI -->
         <section class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800/80 rounded-3xl p-5 md:p-6 shadow-2xl">
             <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/60">
                 <div class="flex items-center gap-3">
@@ -60,7 +81,6 @@
                 <span class="bg-emerald-500/10 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full border border-emerald-500/20 animate-pulse">CANLI PLAYER</span>
             </div>
 
-            <!-- Kick Video Embed -->
             <div class="video-container border border-slate-800 shadow-inner">
                 <iframe src="https://player.kick.com/davlumbuzztv" allowfullscreen="true" scrolling="no"></iframe>
             </div>
@@ -73,7 +93,7 @@
             </div>
         </section>
 
-        <!-- TİKTOK ÖZEL CANLI / PROFİL KARTI -->
+        <!-- 3. TİKTOK ÖZEL KARTI -->
         <section class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800/80 rounded-3xl p-5 md:p-6 shadow-2xl">
             <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800/60">
                 <div class="flex items-center gap-3">
@@ -88,7 +108,6 @@
                 <span class="bg-pink-500/10 text-pink-400 text-xs font-bold px-3 py-1 rounded-full border border-pink-500/20">ÖZEL AKIŞ</span>
             </div>
 
-            <!-- TikTok Bağlantı Kartı -->
             <a href="https://vt.tiktok.com/ZS9Df2QtMTUsU-wTDdc/" target="_blank" class="bg-slate-950/80 hover:bg-slate-950 border border-slate-800/80 hover:border-pink-500/50 rounded-2xl p-5 flex items-center justify-between transition-all group">
                 <div class="flex items-center gap-4">
                     <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-pink-500 to-rose-500 flex items-center justify-center text-white text-2xl shadow-lg shadow-pink-500/20 group-hover:scale-110 transition-transform">
@@ -112,5 +131,51 @@
         DavlumbuzzTV Yayın Merkezi &bull; GitHub Pages
     </footer>
 
+    <!-- YouTube En Son Videoyu Çeken Kod -->
+    <script>
+        const channelId = "UCpLu4UnuANFstfgPuCZ6_uA";
+        const rssUrl = `https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`;
+        const apiProxy = `https://api.allorigins.win/get?url=${encodeURIComponent(rssUrl)}`;
+
+        fetch(apiProxy)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.contents) {
+                    const parser = new DOMParser();
+                    const xmlDoc = parser.parseFromString(data.contents, "text/xml");
+                    const entry = xmlDoc.querySelector("entry");
+
+                    if (entry) {
+                        const title = entry.querySelector("title").textContent;
+                        const videoId = entry.querySelector("videoId").textContent;
+                        const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+                        const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+                        document.getElementById('latestVideoContainer').innerHTML = `
+                            <div class="video-container border border-slate-800 shadow-inner mb-4">
+                                <iframe src="${embedUrl}" allowfullscreen="true" scrolling="no"></iframe>
+                            </div>
+                            <div class="text-left">
+                                <h3 class="text-white text-sm md:text-base font-bold mb-1">${title}</h3>
+                                <a href="${videoUrl}" target="_blank" class="text-red-400 text-xs font-bold hover:underline flex items-center gap-1 inline-flex mt-1">
+                                    YouTube'da Aç ve İzle <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                                </a>
+                            </div>
+                        `;
+                    } else {
+                        document.getElementById('latestVideoContainer').innerText = "Henüz video bulunamadı.";
+                    }
+                }
+            })
+            .catch(error => {
+                console.error("Video çekilemedi:", error);
+                document.getElementById('latestVideoContainer').innerHTML = `
+                    <p class="text-xs text-slate-400 mb-3">En son videoya doğrudan kanal üzerinden ulaşabilirsin:</p>
+                    <a href="https://www.youtube.com/channel/UCpLu4UnuANFstfgPuCZ6_uA" target="_blank" class="inline-block bg-red-600 text-white px-4 py-2 rounded-xl text-xs font-bold">
+                        YouTube Kanalını Aç <i class="fa-solid fa-arrow-up-right-from-square ml-1"></i>
+                    </a>
+                `;
+            });
+    </script>
 </body>
 </html>
