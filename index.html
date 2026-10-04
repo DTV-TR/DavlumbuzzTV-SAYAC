@@ -4,157 +4,107 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Davlumbuzz TV - Canlı Takip Paneli</title>
-    <!-- Tailwind CSS, FontAwesome ve Chart.js -->
+    <!-- Tailwind CSS ve FontAwesome -->
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta+Sans', sans-serif; }
+        body { font-family: 'Plus Jakarta+Sans', sans-serif; background-color: #050507; color: #f8fafc; }
+        /* İframe'in dış taşmalarını kusursuz kırpan özel maske */
+        .counter-container {
+            position: relative;
+            width: 100%;
+            height: 90px;
+            overflow: hidden;
+            border-radius: 1rem;
+        }
+        .counter-container iframe {
+            position: absolute;
+            top: -20px;
+            left: 0;
+            width: 100%;
+            height: 140px;
+            border: 0;
+            pointer-events: none;
+        }
     </style>
 </head>
-<body class="bg-[#07080b] text-slate-100 min-h-screen flex flex-col justify-between selection:bg-red-500 selection:text-white">
+<body class="min-h-screen flex flex-col justify-between selection:bg-red-500 selection:text-white">
 
-    <!-- Header -->
-    <header class="w-full max-w-4xl mx-auto px-4 pt-8 pb-4 text-center">
+    <!-- Üst Başlık -->
+    <header class="w-full max-w-3xl mx-auto px-4 pt-10 pb-6 text-center">
         <div class="inline-flex items-center gap-2 bg-red-500/10 border border-red-500/20 text-red-400 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-wider mb-3">
             <span class="w-2 h-2 rounded-full bg-red-500 animate-ping"></span> Canlı YouTube Monitörü
         </div>
         <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-white">Davlumbuzz TV</h1>
-        <p class="text-slate-400 text-xs md:text-sm mt-1">Her 5 saniyede bir güncellenen anlık istatistik paneli</p>
+        <p class="text-slate-400 text-xs md:text-sm mt-1">Anlık abone ve kanal istatistik takip paneli</p>
     </header>
 
-    <!-- Main Content -->
-    <main class="w-full max-w-4xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+    <!-- Ana Kartlar -->
+    <main class="w-full max-w-3xl mx-auto px-4 grid grid-cols-1 gap-6 mb-12">
         
-        <!-- Abone Sayacı Kartı -->
-        <div class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col justify-between">
-            <div>
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 rounded-2xl bg-red-500/10 flex items-center justify-center text-red-500 text-xl">
-                        <i class="fa-solid fa-users"></i>
-                    </div>
-                    <span class="text-xs font-bold text-red-400 bg-red-500/10 px-3 py-1 rounded-full"><i class="fa-solid fa-rotate mr-1 animate-spin"></i> 5sn</span>
-                </div>
-                <h3 class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Canlı Abone Sayısı</h3>
-            </div>
-            <div class="my-4">
-                <span id="subCount" class="text-4xl md:text-5xl font-black text-white tracking-tight">Yükleniyor...</span>
-            </div>
-            <div class="text-xs text-slate-500 flex items-center justify-between border-t border-slate-800/60 pt-3">
-                <span>Kanal: Davlumbuzz TV</span>
-                <span class="text-emerald-400 font-semibold">Aktif</span>
-            </div>
-        </div>
-
-        <!-- Toplam İzlenme Kartı -->
-        <div class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800 rounded-3xl p-6 shadow-2xl flex flex-col justify-between">
-            <div>
-                <div class="flex items-center justify-between mb-4">
-                    <div class="w-12 h-12 rounded-2xl bg-blue-500/10 flex items-center justify-center text-blue-500 text-xl">
-                        <i class="fa-solid fa-eye"></i>
-                    </div>
-                    <span class="text-xs font-bold text-blue-400 bg-blue-500/10 px-3 py-1 rounded-full"><i class="fa-solid fa-rotate mr-1 animate-spin"></i> 5sn</span>
-                </div>
-                <h3 class="text-slate-400 text-xs font-bold uppercase tracking-wider mb-1">Toplam İzlenme Sayısı</h3>
-            </div>
-            <div class="my-4">
-                <span id="viewCount" class="text-3xl md:text-4xl font-black text-white tracking-tight">Yükleniyor...</span>
-            </div>
-            <div class="text-xs text-slate-500 flex items-center justify-between border-t border-slate-800/60 pt-3">
-                <span>Toplam Görüntülenme</span>
-                <span class="text-blue-400 font-semibold">Canlı</span>
-            </div>
-        </div>
-
-        <!-- Grafik Kartı (Tam Genişlik) -->
-        <div class="md:col-span-2 bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800 rounded-3xl p-6 shadow-2xl">
+        <!-- Canlı Abone Sayacı Kartı -->
+        <div class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800/80 rounded-3xl p-6 shadow-2xl">
             <div class="flex items-center justify-between mb-4">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 text-lg">
-                        <i class="fa-solid fa-chart-line"></i>
+                    <div class="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center text-red-500 text-lg">
+                        <i class="fa-solid fa-users"></i>
                     </div>
                     <div>
-                        <h3 class="text-white text-sm md:text-base font-bold">Anlık Abone Değişim Grafiği</h3>
-                        <p class="text-slate-400 text-xs">Canlı sayaç hareketlerine göre güncellenen simülasyon</p>
+                        <h3 class="text-white text-sm font-bold">Anlık Abone Sayacı</h3>
+                        <p class="text-slate-400 text-xs">Saniyeler içinde gerçek zamanlı güncellenir</p>
                     </div>
                 </div>
-                <span class="text-xs text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-full font-semibold">Canlı Çizgi</span>
+                <span class="bg-red-500/10 text-red-400 text-xs font-bold px-3 py-1 rounded-full border border-red-500/20 animate-pulse">CANLI</span>
             </div>
-            <div class="w-full h-52 bg-slate-950/60 rounded-2xl p-3 border border-slate-800/60">
-                <canvas id="liveChart"></canvas>
+            
+            <!-- Kusursuz Kırpılmış Canlı Abone Sayaç Alanı -->
+            <div class="counter-container bg-slate-950 border border-slate-800 flex items-center justify-center shadow-inner">
+                <iframe src="https://livecounts.io/embed/youtube-live-subscriber-count/UCpLu4UnuANFstfgPuCZ6_uA" scrolling="no"></iframe>
             </div>
         </div>
+
+        <!-- Canlı Görüntülenme / İzlenme Sayacı Kartı -->
+        <div class="bg-gradient-to-br from-slate-900 to-[#12141c] border border-slate-800/80 rounded-3xl p-6 shadow-2xl">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/10 flex items-center justify-center text-blue-500 text-lg">
+                        <i class="fa-solid fa-eye"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-white text-sm font-bold">Anlık İzlenme & Kanal Sayaç</h3>
+                        <p class="text-slate-400 text-xs">Toplam görüntülenme ve detaylı istatistik</p>
+                    </div>
+                </div>
+                <span class="bg-blue-500/10 text-blue-400 text-xs font-bold px-3 py-1 rounded-full border border-blue-500/20">CANLI</span>
+            </div>
+            
+            <!-- Kusursuz Kırpılmış İzlenme Sayaç Alanı -->
+            <div class="counter-container bg-slate-950 border border-slate-800 flex items-center justify-center shadow-inner">
+                <iframe src="https://livecounts.io/embed/youtube-estimated-video-views/UCpLu4UnuANFstfgPuCZ6_uA" scrolling="no"></iframe>
+            </div>
+        </div>
+
+        <!-- Social Blade / Detay Butonu -->
+        <a href="https://socialblade.com/youtube/channel/UCpLu4UnuANFstfgPuCZ6_uA" target="_blank" class="bg-slate-900 hover:bg-slate-850 border border-slate-800 rounded-2xl p-4 flex items-center justify-between transition-all group">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center text-emerald-400 group-hover:scale-110 transition-transform">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs text-slate-400 font-semibold uppercase">Gelişmiş Analiz</h4>
+                    <p class="text-sm font-bold text-white">Social Blade Raporunu Görüntüle</p>
+                </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-400 pr-2"></i>
+        </a>
 
     </main>
 
-    <!-- Footer -->
-    <footer class="w-full text-center py-6 text-xs text-slate-500 border-t border-slate-900">
+    <!-- Alt Bilgi -->
+    <footer class="w-full text-center py-6 text-xs text-slate-600 border-t border-slate-900">
         Muammer tarafından tasarlanmıştır &bull; GitHub Pages
     </footer>
 
-    <!-- JavaScript Canlı Veri ve Grafik Mantığı -->
-    <script>
-        // Grafik Hazırlığı
-        const ctx = document.getElementById('liveChart').getContext('2d');
-        const liveChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: ['10s önce', '8s önce', '6s önce', '4s önce', '2s önce', 'Şimdi'],
-                datasets: [{
-                    label: 'Abone Seviyesi',
-                    data: [0, 0, 0, 0, 0, 0],
-                    borderColor: '#ef4444',
-                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
-                    borderWidth: 3,
-                    fill: true,
-                    tension: 0.3,
-                    pointBackgroundColor: '#ef4444',
-                    pointRadius: 4
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: { legend: { display: false } },
-                scales: {
-                    x: { grid: { color: 'rgba(255, 255, 255, 0.03)' }, ticks: { color: '#94a3b8', font: { size: 10 } } },
-                    y: { grid: { color: 'rgba(255, 255, 255, 0.05)' }, ticks: { color: '#94a3b8', font: { size: 10 } } }
-                }
-            }
-        });
-
-        // Verileri Çekme ve 5 Saniyede Bir Güncelleme Fonksiyonu
-        async function fetchStats() {
-            try {
-                // Halka açık canlı sayaç verisi çeken güvenli köprü
-                const response = await fetch('https://api.livecounts.io/youtube-live-subscriber-count/view/UCpLu4UnuANFstfgPuCZ6_uA');
-                const data = await response.json();
-
-                if (data && data.success) {
-                    const subs = data.counts.subscriberCount;
-                    const views = data.counts.viewCount || 0;
-
-                    // Ekrana yazdırma (binlik ayraçlı)
-                    document.getElementById('subCount').innerText = Number(subs).toLocaleString('tr-TR');
-                    document.getElementById('viewCount').innerText = Number(views).toLocaleString('tr-TR');
-
-                    // Grafiği güncelle
-                    const chartData = liveChart.data.datasets[0].data;
-                    chartData.shift(); // En eski veriyi at
-                    chartData.push(subs); // Yeni abone sayısını ekle
-                    liveChart.update();
-                }
-            } catch (error) {
-                console.error("Veri alınamadı, yedek kaynak deneniyor...", error);
-            }
-        }
-
-        // İlk açılışta hemen çalıştır
-        fetchStats();
-
-        // Her 5 saniyede bir (5000 milisaniye) tekrar et
-        setInterval(fetchStats, 5000);
-    </script>
 </body>
 </html>
